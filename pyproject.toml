@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tweaker"
+version = "0.1.0"
+description = "Text transformation toolkit for ETL pipelines."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name="Your Name", email="you@example.com" }]
+license = { text = "MIT" }
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/firstflush/tweaker"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

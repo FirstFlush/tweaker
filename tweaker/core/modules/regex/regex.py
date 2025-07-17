@@ -1,12 +1,15 @@
 import re
 from typing import Iterator
 from ...base_module import BaseModule
-from .regex_patterns import CommonPatterns
+from .patterns import CommonPatterns
 
 
 class RegexTool(BaseModule):
 
     common_patterns = CommonPatterns
+
+    def compile(self, pattern: str, flags: int = 0) -> re.Pattern:
+        return re.compile(pattern, flags)
 
     def find_all(self, pattern: str, text: str, flags: int = 0) -> list[str]:
         return re.findall(pattern, text, flags)
