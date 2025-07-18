@@ -59,5 +59,6 @@ class CommonPatterns:
     # - Strict by design — prioritizes correctness over fuzziness
     TO_FLOAT = r"(?<![\d.,:(#-])[-+]?(?:\d{1,3}(?:,\d{3})*|\d+)(?:\.\d+)?(?![.\d:,°$\-)])"
 
-    WEBSITE = r"https?://[^\s/$.?#].[^\s]*|www\.[^\s/$.?#].[^\s]*"
+    # WEBSITE = r"https?://[^\s/$.?#].[^\s]*|www\.[^\s/$.?#].[^\s]*"
+    URL =     r'(?:https?://)?(?:www\.)?[a-z0-9-]+(?:\.[a-z]{2,})+(?:[/?#][^\s"]*)?' 
     PUNCTUATION = r"[^\w\s]"
