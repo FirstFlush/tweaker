@@ -1,59 +1,59 @@
 from ...base_module import BaseSubstringMapping
-
+from .enums import Currency
 
 class CurrencyMapping(BaseSubstringMapping):
         
-    FREE_WORDS = {
+    FREE = {
         0.0 : {"free", "nocost", "gratis", "complimentary"}
     }
     
     CURRENCY_TYPES = {
-        "cad": {
+        Currency.CAD: {
             "cad", "canadian", "canadien", "cdn", "c$", "ca$", "cadollar", "cadollars"
         },
-        "usd": {
+        Currency.USD: {
             "usd", "usdollars", "us$", "u$", "american", "unitedstates", "uscurrency", "usfunds", "dollar", "dollars"
         },
-        "gbp": {
+        Currency.GBP: {
             "gbp", "pound", "pounds", "britishpound", "britishpounds", "£", "gb£", "ukpound", "sterling", "quid"
         },
-        "eur": {
+        Currency.EUR: {
             "eur", "euro", "euros", "€", "eu", "eucurrency", "eufunds"
         },
-        "btc": {
+        Currency.BTC: {
             "btc", "bitcoin", "₿", "bit", "satoshi", "sat", "sats"
         },
-        "eth": {
+        Currency.ETH: {
             "eth", "ethereum", "ether",
         },
-        "jpy": {
+        Currency.JPY: {
             "jpy", "yen", "¥", "jp¥", "japanese", "japaneseyen"
         },
-        "cny": {
+        Currency.CNY: {
             "cny", "yuan", "renminbi", "rmb", "cn¥", "chineseyuan", "chinesermb"
         },
-        "inr": {
+        Currency.INR: {
             "inr", "rupee", "rupees", "₹", "rs", "indianrupee", "indianrupees"
         },
-        "aud": {
+        Currency.AUD: {
             "aud", "australian", "australiandollar", "aussiedollar", "a$"
         },
-        "nzd": {
+        Currency.NZD: {
             "nzd", "kiwidollar", "kiwi", "nz$", "newzealand", "newzealanddollar"
         },
-        "chf": {
+        Currency.CHF: {
             "chf", "swiss", "swissfranc", "fr", "sfr", "swissmoney"
         },
-        "ils": {
+        Currency.ILS: {
             "ils", "shekel", "shekels", "₪", "israelishekel", "nis", "newisraelishekel"
         },
-        "mxn": {
+        Currency.MXN: {
             "mxn", "peso", "pesos", "mexicanpeso", "mexicanpesos", "m$", "mx$", "mex$"
         },
-        "brl": {
+        Currency.BRL: {
             "brl", "real", "reais", "brazilianreal", "r$", "br$"
         },
-        "zar": {
+        Currency.ZAR: {
             "zar", "rand", "southafricanrand", "r"
         },
     }

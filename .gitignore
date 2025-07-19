@@ -1,5 +1,6 @@
 # Tweaker
 src/dev/
+setup.py
 
 # Python
 __pycache__/

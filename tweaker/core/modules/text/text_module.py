@@ -1,7 +1,8 @@
 from ...base_module import BaseModule
 import unicodedata
 
-class TextToolkit(BaseModule):
+
+class TextModule(BaseModule):
     
     def normalize(self, text: str, keep_whitespace: bool = False) -> str:
         """
@@ -15,20 +16,30 @@ class TextToolkit(BaseModule):
         return delimiter.join(self.tokenize(text))
 
     def tokenize(self, text: str) -> list[str]:
-        unicode_normalized = self.normalize_unicode(text)
-        stripped_punctuation = self.strip_punctuation(unicode_normalized)
-        
+        unicode_normalized = self._normalize_unicode(text)
+        dashes_replaced = self._replace_all_dashes(unicode_normalized)
+        stripped_punctuation = self._strip_punctuation(dashes_replaced)
         return stripped_punctuation.lower().strip().split()
 
 
-    def strip_punctuation(self, text: str) -> str:
+    def _replace_all_dashes(self, text: str, substitute: str = " ") -> str:
+        """
+        Replaces all dash and underscore chars with substitute value.
+        """
+        return text.replace("–", substitute).replace("—", substitute).replace("−", substitute)   \
+        .replace("‒", substitute).replace("―", substitute).replace("‑", substitute)              \
+        .replace("-", substitute).replace("_", substitute)
+
+
+
+    def _strip_punctuation(self, text: str) -> str:
         return self.tweaker.regex.sub(
             pattern=self.tweaker.regex.common_patterns.PUNCTUATION, 
             repl="", 
             text=text
-        )
+        ).strip()
     
-    def normalize_unicode(self, text: str) -> str:
+    def _normalize_unicode(self, text: str) -> str:
         """
         Converts text to Unicode NFKC form.
 

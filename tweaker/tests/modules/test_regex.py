@@ -3,7 +3,7 @@ import pytest
 from .testdata.emails import valid_emails, invalid_emails
 from .testdata.numbers import invalid_floats, two_numbers, currency
 from .testdata.urls import valid_urls, valid_urls_with_params, invalid_urls
-
+from .testdata.text import punctuation_testdata
 
 # class TestUrl:
     
@@ -20,6 +20,22 @@ from .testdata.urls import valid_urls, valid_urls_with_params, invalid_urls
 #     def test_invalid_urls(self, url: str, pattern: str, tweaker: Tweaker):
 #         match = tweaker.regex.search(pattern, url)
 #         assert match is None
+
+
+class TestPunctuation:
+    
+    @pytest.fixture(scope="class")
+    def pattern(self, tweaker: Tweaker) -> str:
+        return tweaker.regex.common_patterns.PUNCTUATION
+
+    @pytest.mark.parametrize("testdata", punctuation_testdata)
+    def test_punctuation(self, testdata: tuple[str, str], pattern: str, tweaker: Tweaker):
+        result = tweaker.regex.sub(
+            pattern=pattern, 
+            repl="", 
+            text=testdata[0]
+        ).strip()
+        assert result == testdata[1]
 
 
 class TestToFloat:

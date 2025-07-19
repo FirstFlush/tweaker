@@ -9,7 +9,7 @@ class CurrencyParser(BaseModule):
         normalized = self.tweaker.text.normalize(text)
         amount = self.currency_mapping.get_key(
             text=normalized,
-            mapping=self.currency_mapping.FREE_WORDS,
+            mapping=self.currency_mapping.FREE,
         )
         return float(amount) if amount else None
     
