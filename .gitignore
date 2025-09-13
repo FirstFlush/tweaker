@@ -1,5 +1,6 @@
 # Tweaker
-src/dev/
+tweaker/dev/
+tweaker/tweaker/dev/
 setup.py
 
 # Python
