@@ -2,7 +2,7 @@ import dateparser
 from datetime import datetime
 from ...base_module import BaseModule
 from .time_mapping import TimeMapping
-from ..text.module import TextNormalizer
+from ..internal.text.module import TextNormalizer
 
 
 class DateTimeUtil(BaseModule):

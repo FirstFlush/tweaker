@@ -1,9 +1,8 @@
-from typing import TYPE_CHECKING
 from ...base_module import BaseModule
 from .address import AddressExtractor
 from.email import EmailExtractor
 from.phone import PhoneExtractor
-from ..regex.module import RegexUtility
+from ..internal.regex.module import RegexUtility
 
 
 class ContactExtractor(BaseModule):

@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Type, TypeVar
 from ...base_module import BaseModule
-from ..text.module import TextNormalizer
+from ..internal.text.module import TextNormalizer
 
 E = TypeVar("E", bound=Enum)
 

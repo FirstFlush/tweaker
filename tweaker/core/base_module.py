@@ -1,14 +1,9 @@
 from abc import ABC
-from typing import Any, TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from .tweaker import Tweaker
+from typing import Any
 
 
 class BaseModule(ABC):
     ...
-    # def __init__(self, tweaker: "Tweaker"):
-    #     self.tweaker = tweaker
         
 
 class BaseSubstringMapping:

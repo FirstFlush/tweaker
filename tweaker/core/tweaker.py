@@ -4,6 +4,7 @@ from .modules.enums.module import EnumModule
 # from .modules.region.region_matcher import RegionMatcher
 from .modules.internal.regex.module import RegexUtility
 from .modules.contact.module import ContactExtractor
+from .modules.measure.module import MeasurementModule
 from .modules.internal.text.module import TextNormalizer
 from .modules.internal.cast.module import TypeCaster
 from .modules.internal.fuzzy.module import FuzzyMatcher
@@ -25,3 +26,4 @@ class Tweaker:
         )
         self.datetime = DateTimeUtil(normalizer=self._normalizer)
         self.enum = EnumModule(normalizer=self._normalizer)
+        self.measure = MeasurementModule()

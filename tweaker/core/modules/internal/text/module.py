@@ -1,4 +1,3 @@
-from ...base_module import BaseModule
 from ..regex.module import RegexUtility
 import unicodedata
 

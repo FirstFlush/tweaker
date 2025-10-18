@@ -1,5 +1,5 @@
 from ...base_module import BaseModule
-from ..regex.module import RegexUtility
+from ..internal.regex.module import RegexUtility
 from email_validator import validate_email, EmailNotValidError
 import re
 
