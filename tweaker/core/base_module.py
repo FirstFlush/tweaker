@@ -6,9 +6,9 @@ if TYPE_CHECKING:
 
 
 class BaseModule(ABC):
-
-    def __init__(self, tweaker: "Tweaker"):
-        self.tweaker = tweaker
+    ...
+    # def __init__(self, tweaker: "Tweaker"):
+    #     self.tweaker = tweaker
         
 
 class BaseSubstringMapping:

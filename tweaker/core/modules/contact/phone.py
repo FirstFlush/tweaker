@@ -3,8 +3,11 @@ from phonenumbers import PhoneNumberFormat, PhoneNumberMatcher
 from ...base_module import BaseModule
 
 
-class PhoneSniffer(BaseModule):
-
+class PhoneExtractor(BaseModule):
+    """
+    Extracts and normalizes phone numbers from arbitrary text using Google's libphonenumber.
+    Scans full paragraphs or mixed content and returns valid numbers in standardized E.164 format.
+    """
     def extract_number(self, text: str, region: str = "US", **kwargs) -> str | None:
         _matches = PhoneNumberMatcher(text, region, **kwargs)
         for _match in _matches:

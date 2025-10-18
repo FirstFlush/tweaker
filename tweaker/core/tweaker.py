@@ -1,21 +1,27 @@
-from .modules.currency.currency_parser import CurrencyParser
-from .modules.datetime_util.datetime_util import DateTimeUtil
-from .modules.enums.enum_toolkit import EnumToolkit 
-from .modules.region.region_matcher import RegionMatcher
-from .modules.regex.regex import RegexTool
-from .modules.contact.contact import ContactSniffer
-from .modules.text.text_module import TextModule
-from .modules.types_util.types import TypeTransformer
+from .modules.currency.module import CurrencyParser
+from .modules.datetime.module import DateTimeUtil
+from .modules.enums.module import EnumModule
+# from .modules.region.region_matcher import RegionMatcher
+from .modules.internal.regex.module import RegexUtility
+from .modules.contact.module import ContactExtractor
+from .modules.internal.text.module import TextNormalizer
+from .modules.internal.cast.module import TypeCaster
+from .modules.internal.fuzzy.module import FuzzyMatcher
 
 
 class Tweaker:
     
     def __init__(self):
-        self.contact = ContactSniffer(self)
-        self.currency = CurrencyParser(self)
-        self.date = DateTimeUtil(self)
-        self.enum = EnumToolkit(self)
-        self.regex = RegexTool(self)
-        self.region = RegionMatcher(self)
-        self.text = TextModule(self)
-        self.types = TypeTransformer(self)
+        self._regex = RegexUtility()
+        self._normalizer = TextNormalizer(regex=self._regex)
+        self._cast = TypeCaster(regex=self._regex)
+        self._fuzzy = FuzzyMatcher()
+
+        self.contact = ContactExtractor(regex=self._regex)
+        self.currency = CurrencyParser(
+            normalizer=self._normalizer, 
+            regex=self._regex,
+            cast=self._cast,
+        )
+        self.datetime = DateTimeUtil(normalizer=self._normalizer)
+        self.enum = EnumModule(normalizer=self._normalizer)

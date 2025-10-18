@@ -1,10 +1,21 @@
-from ...base_module import BaseModule
+from ..regex.module import RegexUtility
 from decimal import Decimal
 
-class TypeTransformer(BaseModule):
-    
+
+class TypeCaster:
+    """
+    Utility for casting text values into primitive Python types.
+
+    Provides both strict and inferred conversions for booleans and numbers.
+    Uses regex-based numeric extraction to safely parse floats, ints, or Decimals
+    from noisy or formatted input (e.g. "$42.50", "approx. 3", "yes", "no").
+    """
+
     TRUE_VALUES = {"true", "yes", "y",}
     FALSE_VALUES = {"false", "no", "n",}
+
+    def __init__(self, regex: RegexUtility):
+        self.regex = regex
 
     def to_bool(self, text: str) -> bool | None:
         """
@@ -22,9 +33,9 @@ class TypeTransformer(BaseModule):
         Infers a boolean value from a sentence or messy input.
         """
         cleaned = text.lower().strip()
-        if any(val in cleaned for val in self.tweaker.types.TRUE_VALUES if len(val) > 1):
+        if any(val in cleaned for val in self.TRUE_VALUES if len(val) > 1):
             return True
-        if any(val in cleaned for val in self.tweaker.types.FALSE_VALUES if len(val) > 1):
+        if any(val in cleaned for val in self.FALSE_VALUES if len(val) > 1):
             return False
         return None
 
@@ -34,8 +45,8 @@ class TypeTransformer(BaseModule):
 
     def to_float(self, text: str) -> float | None:
         cleaned = text.lower().strip()
-        pattern = self.tweaker.regex.common_patterns.TO_FLOAT
-        float_text = self.tweaker.regex.search(pattern=pattern, text=cleaned)
+        pattern = self.regex.common_patterns.TO_FLOAT
+        float_text = self.regex.search(pattern=pattern, text=cleaned)
         if float_text is not None:
             return float(float_text)
         return None

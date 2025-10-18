@@ -1,9 +1,13 @@
 from ...base_module import BaseModule
+from ..regex.module import RegexUtility
 import unicodedata
 
 
-class TextModule(BaseModule):
+class TextNormalizer:
     
+    def __init__(self, regex: RegexUtility):
+        self.regex = regex
+
     def normalize(self, text: str, keep_whitespace: bool = False) -> str:
         """
         Normalize a string for fuzzy matching or comparison:
@@ -31,10 +35,9 @@ class TextModule(BaseModule):
         .replace("-", substitute).replace("_", substitute)
 
 
-
     def _strip_punctuation(self, text: str) -> str:
-        return self.tweaker.regex.sub(
-            pattern=self.tweaker.regex.common_patterns.PUNCTUATION, 
+        return self.regex.sub(
+            pattern=self.regex.common_patterns.PUNCTUATION, 
             repl="", 
             text=text
         ).strip()

@@ -1,10 +1,9 @@
 import re
 from typing import Iterator
-from ...base_module import BaseModule
 from .patterns import CommonPatterns
 
 
-class RegexTool(BaseModule):
+class RegexUtility:
 
     common_patterns = CommonPatterns
 
@@ -20,7 +19,6 @@ class RegexTool(BaseModule):
 
     def sub(self, pattern: str, repl: str, text: str, flags: int = 0) -> str:
         return re.sub(pattern=pattern, repl=repl, string=text, flags=flags)
-
 
     def extract_groups(self, pattern: str, text: str, groups: list[int], flags: int = 0) -> list[str] | None:
         match = re.search(pattern, text, flags)
