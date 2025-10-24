@@ -1,13 +1,14 @@
+from .modules.contact.module import ContactExtractor
 from .modules.currency.module import CurrencyParser
 from .modules.datetime.module import DateTimeUtil
 from .modules.enums.module import EnumModule
-# from .modules.region.region_matcher import RegionMatcher
-from .modules.internal.regex.module import RegexUtility
-from .modules.contact.module import ContactExtractor
+from .modules.keyword.module import KeywordMatcher
 from .modules.measure.module import MeasurementModule
-from .modules.internal.text.module import TextNormalizer
+
 from .modules.internal.cast.module import TypeCaster
 from .modules.internal.fuzzy.module import FuzzyMatcher
+from .modules.internal.text.module import TextNormalizer
+from .modules.internal.regex.module import RegexUtility
 
 
 class Tweaker:
@@ -17,7 +18,6 @@ class Tweaker:
         self._normalizer = TextNormalizer(regex=self._regex)
         self._cast = TypeCaster(regex=self._regex)
         self._fuzzy = FuzzyMatcher()
-
         self.contact = ContactExtractor(regex=self._regex)
         self.currency = CurrencyParser(
             normalizer=self._normalizer, 
@@ -26,4 +26,5 @@ class Tweaker:
         )
         self.datetime = DateTimeUtil(normalizer=self._normalizer)
         self.enum = EnumModule(normalizer=self._normalizer)
+        self.keyword = KeywordMatcher(normalizer=self._normalizer)
         self.measure = MeasurementModule()
