@@ -19,11 +19,21 @@ class TextNormalizer:
         return delimiter.join(self.tokenize(text))
 
     def tokenize(self, text: str) -> list[str]:
-        unicode_normalized = self._normalize_unicode(text)
-        dashes_replaced = self._replace_all_dashes(unicode_normalized)
-        stripped_punctuation = self._strip_punctuation(dashes_replaced)
-        return stripped_punctuation.lower().strip().split()
+        text = self.normalize_whitespace(text)
+        text = self._normalize_unicode(text)
+        text = self._replace_all_dashes(text)
+        text = self._strip_punctuation(text)
+        return text.lower().strip().split()
 
+    def normalize_whitespace(self, text: str, keep_space: bool = True) -> str:
+        """
+        collapse all whitespace (space, tab, newline, etc.) to a single space
+        """
+        if keep_space:
+            text = self.regex.sub(r'\s+', " ", text)
+        else:
+            text = self.regex.sub(r'\s+', "", text)
+        return text.strip()
 
     def _replace_all_dashes(self, text: str, substitute: str = " ") -> str:
         """
