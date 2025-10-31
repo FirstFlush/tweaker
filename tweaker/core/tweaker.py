@@ -1,3 +1,4 @@
+import warnings
 from .modules.contact.module import ContactExtractor
 from .modules.currency.module import CurrencyParser
 from .modules.datetime.module import DateTimeUtil
@@ -15,8 +16,14 @@ class Tweaker:
     
     def __init__(self):
         self._regex = RegexUtility()
-        self._normalizer = TextNormalizer(regex=self._regex)
+        self._normalizer = TextNormalizer(regex=self._regex)    # deprecated
+        warnings.warn(
+            "Tweaker._normalizer is deprecated. Use Tweaker.text instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         self._cast = TypeCaster(regex=self._regex)
+        self.text = TextNormalizer(regex=self._regex)
         self._fuzzy = FuzzyMatcher()
         self.contact = ContactExtractor(regex=self._regex)
         self.currency = CurrencyParser(
