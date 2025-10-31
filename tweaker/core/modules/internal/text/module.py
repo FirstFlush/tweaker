@@ -19,11 +19,29 @@ class TextNormalizer:
         return delimiter.join(self.tokenize(text))
 
     def tokenize(self, text: str) -> list[str]:
-        text = self.normalize_whitespace(text)
         text = self._normalize_unicode(text)
-        text = self._replace_all_dashes(text)
+        text = self.normalize_whitespace(text)
+        text = self._normalize_symbols(text)
+        text = self._normalize_dashes(text)
         text = self._strip_punctuation(text)
         return text.lower().strip().split()
+
+    def normalize_text(self, text: str) -> str:
+        """
+        Normalize human-readable text (e.g. paragraphs, product descriptions).
+
+        - Normalizes Unicode to NFKC (fixes full-width, ligatures, etc.)
+        - Removes invisible or non-breaking space characters
+        - Collapses multiple whitespace/newlines into single spaces
+        - Standardizes typographic symbols (quotes, ellipses, bullets)
+        - Replaces all dash variants with a standard ASCII hyphen ("-")
+        - Preserves punctuation, case, and overall readability
+        """        
+        text = self._normalize_unicode(text)
+        text = self.normalize_whitespace(text, keep_space=True)
+        text = self._normalize_symbols(text)
+        text = self._normalize_dashes(text, substitute="-")
+        return text.strip()
 
     def normalize_whitespace(self, text: str, keep_space: bool = True) -> str:
         """
@@ -36,16 +54,29 @@ class TextNormalizer:
             text = self.regex.sub(r'\s+', "", text)
         return text.strip()
 
-    def _replace_all_dashes(self, text: str, substitute: str = " ") -> str:
+    def _normalize_dashes(self, text: str, substitute: str = "-") -> str:
         """
         Replaces all dash and underscore chars with substitute value.
         """
-        return text.replace("–", substitute).replace("—", substitute).replace("−", substitute)   \
-        .replace("‒", substitute).replace("―", substitute).replace("‑", substitute)              \
-        .replace("-", substitute).replace("_", substitute)
+        dash_chars = "‐-‒–—―−_"
+        return self.regex.sub(f"[{dash_chars}]", substitute, text)
 
     def _remove_invisible_chars(self, text: str) -> str:
         return self.regex.sub(r"[\u00A0\u2000-\u200D\u2028\u2029\u2060\uFEFF]+", " ", text)
+
+    def _normalize_symbols(self, text: str) -> str:
+        """Normalizes symbols, except hyphen/dash type symbols are handled in _normalize_dashes"""
+        replacements = {
+            "“": '"', "”": '"', "„": '"',
+            "‘": "'", "’": "'", "‚": "'",
+            "′": "'", "″": '"',
+            "…": "...",
+            "•": "-",
+        }
+        for k, v in replacements.items():
+            text = text.replace(k, v)
+        text = self.regex.sub(r"[\x00-\x08\x0B\x0C\x0E-\x1F]", "", text)
+        return text
 
     def _strip_punctuation(self, text: str) -> str:
         return self.regex.sub(
